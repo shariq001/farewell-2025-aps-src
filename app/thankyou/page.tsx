@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import React, { Suspense } from 'react';
 
 const subjectMessages: Record<string, string> = {
   Biology: "Your way of teaching biology was amazing, and the way you explained every concept made everything so clear and easy to understand. We truly loved your teaching style and will always remember your classes. Thank you for making biology so interesting and fun!",
@@ -15,7 +16,7 @@ const subjectMessages: Record<string, string> = {
   PakistanStudies: "Your lessons on Pakistan Studies were incredibly insightful. You made history and geography come alive by connecting us to the past and showing us how the events shaped our present. Your ability to explain the history of Pakistan with such clarity and passion made us proud of our country. You have truly made a lasting impact on how we view our history and culture. We will always remember your engaging lessons!",
 };
 
-export default function ThankYou() {
+function ThankYouContent() {
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
   const title = searchParams.get('title');
@@ -27,21 +28,35 @@ export default function ThankYou() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-black text-white p-6">
       <div className="max-w-3xl w-full bg-gray-800 p-8 rounded-2xl shadow-lg">
-        <h1 className="text-3xl font-extrabold text-center text-purple-400 mb-2">Thank You, {prefix} {name}!</h1>
+        <h1 className="text-3xl font-extrabold text-center text-purple-400 mb-2">
+          Thank You, {prefix} {name}!
+        </h1>
         <p className="text-center text-lg font-semibold text-teal-300 mb-4">{title}</p>
 
-        <p className="text-justify text-base leading-relaxed text-gray-300 mb-6 italic">{subjectMessages[subject]}</p>
+        <p className="text-justify text-base leading-relaxed text-gray-300 mb-6 italic">
+          {subjectMessages[subject]}
+        </p>
 
         <p className="text-justify text-sm leading-relaxed text-gray-400 mb-6">
-          We kindly ask that you keep us in your prayers as we continue on our journeys toward success. Your guidance and wisdom have played a significant role in shaping our understanding and growth, and we hope to carry forward the lessons you’ve taught us. The impact you’ve had on our lives will always be remembered and cherished, and we are deeply grateful for the time and effort you’ve invested in us. As we move forward, we will strive to make you proud and uphold the values you&apos;ve instilled in us.
+          We kindly ask that you keep us in your prayers as we continue on our journeys toward success.
+          Your guidance and wisdom have played a significant role in shaping our understanding and growth,
+          and we hope to carry forward the lessons you’ve taught us. The impact you’ve had on our lives
+          will always be remembered and cherished, and we are deeply grateful for the time and effort
+          you’ve invested in us. As we move forward, we will strive to make you proud and uphold the values
+          you&apos;ve instilled in us.
         </p>
 
         <p className="text-justify text-sm leading-relaxed text-gray-300 mb-6">
-          We send you our heartfelt greetings and warmest wishes, with all of us students expressing our gratitude and admiration. Your impact on us has been immeasurable, and we truly appreciate everything you’ve done for us. May happiness, success, and blessings follow you in everything you do. Please know that our thoughts and best wishes are always with you.
+          We send you our heartfelt greetings and warmest wishes, with all of us students expressing our
+          gratitude and admiration. Your impact on us has been immeasurable, and we truly appreciate
+          everything you’ve done for us. May happiness, success, and blessings follow you in everything you do.
+          Please know that our thoughts and best wishes are always with you.
         </p>
 
         <a
-          href={`https://wa.me/923182965978?text=${encodeURIComponent(`Dear ${prefix} ${name}, we want to hear your thoughts for the farewell party. How was it? Did you enjoy it? Will you miss us? And please leave a last message for us students.`)}`}
+          href={`https://wa.me/923182965978?text=${encodeURIComponent(
+            `Dear ${prefix} ${name}, we want to hear your thoughts for the farewell party. How was it? Did you enjoy it? Will you miss us? And please leave a last message for us students.`
+          )}`}
           className="block text-center bg-green-600 text-white font-semibold py-2 px-6 rounded-xl hover:bg-green-700 transition duration-200"
           target="_blank"
         >
@@ -49,7 +64,12 @@ export default function ThankYou() {
         </a>
 
         <p className="text-center mt-8 text-pink-400 font-semibold text-lg leading-relaxed">
-          A heartfelt thank you to our beloved teachers, whose dedication, patience, and unwavering support have shaped us into who we are today. Your guidance has not only taught us academic lessons but also life lessons that we will carry with us forever. You have inspired us to think critically, work hard, and believe in our potential. Your kindness and encouragement have made a lasting impact, and for that, we will always be grateful. Thank you for believing in us and for being the guiding lights in our journey. ❤️❤️
+          A heartfelt thank you to our beloved teachers, whose dedication, patience, and unwavering support
+          have shaped us into who we are today. Your guidance has not only taught us academic lessons but
+          also life lessons that we will carry with us forever. You have inspired us to think critically,
+          work hard, and believe in our potential. Your kindness and encouragement have made a lasting impact,
+          and for that, we will always be grateful. Thank you for believing in us and for being the guiding lights
+          in our journey. ❤️❤️
         </p>
 
         <div className="text-center mt-10">
@@ -58,5 +78,13 @@ export default function ThankYou() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ThankYou() {
+  return (
+    <Suspense fallback={<div className="text-white text-center mt-20">Loading message...</div>}>
+      <ThankYouContent />
+    </Suspense>
   );
 }
